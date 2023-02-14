@@ -59,7 +59,7 @@ pub enum Rank {
 }
 
 impl Rank {
-    pub fn get_value(&self) -> u8 {
+    pub fn value(&self) -> u8 {
         let value: u8 = match self {
             Rank::X => 0_u8,
             Rank::Ace => 14_u8,

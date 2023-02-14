@@ -15,24 +15,24 @@ pub fn run(combomap: &[Vec<Card>]) -> (HandRank, Vec<Card>){
         if combo[0].rank == combo[1].rank{
             if combo[1].rank == combo[2].rank{
                 if combo[2].rank == combo[3].rank{
-                    handrankmap.push((HandRank::Quads { initial: combo[0].rank } , &combo));
+                    handrankmap.push((HandRank::Quads { set: combo[0].rank } , &combo));
                 }else{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::Fullhouse { initial: combo[0].rank, pair: combo[3].rank } , &combo));
+                        handrankmap.push((HandRank::Fullhouse { set: combo[0].rank, pair: combo[3].rank } , &combo));
                     }else{
-                        handrankmap.push((HandRank::Trips { initial: combo[0].rank }, &combo));
+                        handrankmap.push((HandRank::Trips { set: combo[0].rank }, &combo));
                     }
                 }
             }else{
                 if combo[2].rank == combo[3].rank{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::Fullhouse { initial: combo[2].rank, pair: combo[0].rank } , &combo));
+                        handrankmap.push((HandRank::Fullhouse { set: combo[2].rank, pair: combo[0].rank } , &combo));
                     }else{
-                        handrankmap.push((HandRank::TwoPair { pair_high: combo[0].rank, pair_low: combo[2].rank } , &combo));
+                        handrankmap.push((HandRank::TwoPair { pair1: combo[0].rank, pair2: combo[2].rank } , &combo));
                     }
                 }else{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::TwoPair { pair_high: combo[0].rank, pair_low: combo[3].rank } , &combo));
+                        handrankmap.push((HandRank::TwoPair { pair1: combo[0].rank, pair2: combo[3].rank } , &combo));
                     }else{
                         handrankmap.push((HandRank::OnePair { pair: combo[0].rank } , &combo));
                     }
@@ -42,13 +42,13 @@ pub fn run(combomap: &[Vec<Card>]) -> (HandRank, Vec<Card>){
             if combo[1].rank == combo[2].rank{
                 if combo[2].rank == combo[3].rank{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::Quads { initial: combo[1].rank } , &combo));
+                        handrankmap.push((HandRank::Quads { set: combo[1].rank } , &combo));
                     }else{
-                        handrankmap.push((HandRank::Trips { initial: combo[1].rank } , &combo));
+                        handrankmap.push((HandRank::Trips { set: combo[1].rank } , &combo));
                     }
                 }else{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::TwoPair { pair_high: combo[1].rank, pair_low: combo[3].rank } , &combo));
+                        handrankmap.push((HandRank::TwoPair { pair1: combo[1].rank, pair2: combo[3].rank } , &combo));
                     }else{
                         handrankmap.push((HandRank::OnePair { pair: combo[1].rank } , &combo));
                     }
@@ -56,7 +56,7 @@ pub fn run(combomap: &[Vec<Card>]) -> (HandRank, Vec<Card>){
             }else{
                 if combo[2].rank == combo[3].rank{
                     if combo[3].rank == combo[4].rank{
-                        handrankmap.push((HandRank::Trips { initial: combo[2].rank } , &combo));
+                        handrankmap.push((HandRank::Trips { set: combo[2].rank } , &combo));
                     }else{
                             handrankmap.push((HandRank::OnePair { pair: combo[2].rank } , &combo));
                     }
@@ -67,12 +67,12 @@ pub fn run(combomap: &[Vec<Card>]) -> (HandRank, Vec<Card>){
                         // ストレートの判定
                         if (combo[0].rank == Rank::Ace)&&(combo[1].rank == Rank::Five){
                             for i in 2..5{
-                                straight_flg = ((combo[i].rank.get_value() + 1) == combo[i-1].rank.get_value()) 
+                                straight_flg = ((combo[i].rank.value() + 1) == combo[i-1].rank.value()) 
                                                     && straight_flg;
                             }
                         }else{
                             for i in 1..5{
-                                straight_flg = ((combo[i].rank.get_value() + 1) == combo[i-1].rank.get_value()) 
+                                straight_flg = ((combo[i].rank.value() + 1) == combo[i-1].rank.value()) 
                                                     && straight_flg;
                             }
                         }
@@ -114,7 +114,7 @@ pub fn run(combomap: &[Vec<Card>]) -> (HandRank, Vec<Card>){
     }
     // 役とハンドのマップから最も強い役とハンドを探す
     for (hr, h) in handrankmap{
-        if handrank.get_value() < hr.get_value(){
+        if handrank.value() < hr.value(){
             handrank = hr;
             hand = h.to_vec();
         }
