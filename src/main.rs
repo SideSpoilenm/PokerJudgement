@@ -28,7 +28,7 @@ fn main() {
     let hero_cards: Vec<Card> = (&cards[0..2]).to_vec();
     let vill_cards: Vec<Card> = (&cards[2..4]).to_vec();
     let flop_cards: Vec<Card> = (&cards[4..7]).to_vec();
-    let eq = equity::run(&flop_cards, &hero_cards, &vill_cards);
+    let eq = equity::calc(&flop_cards, &hero_cards, &vill_cards);
     println!("*************** EQUITY ***************");
     print!("hero: {}% \t villain: {}%", eq.0, eq.1);
 }
