@@ -35,6 +35,7 @@ pub fn boardmap(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -
             rank: Rank::X,
         })
     {
+        // プリフロップの場合
         for i in 0..(deck.len() - 4) {
             for j in (i + 1)..(deck.len() - 3) {
                 for k in (j + 1)..(deck.len() - 2) {

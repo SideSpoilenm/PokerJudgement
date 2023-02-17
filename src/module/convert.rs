@@ -38,3 +38,11 @@ pub fn lavel_to_card(text: String) -> Card{
     let s = t.nth(0).unwrap().to_string();
     Card{rank: str_to_rank(&r), suit: str_to_suit(&s)}
 }
+
+pub fn hand_to_label(hand: &Vec<Card>)->String{
+    let mut s = "".to_string();
+    for card in hand{
+        s = format!("{}{}", s, card.to_lavel());
+    }
+    s
+}

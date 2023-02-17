@@ -1,8 +1,9 @@
 mod module;
-use module::card::Card;
+mod range;
+use module::card::{Card, Suit, Rank};
 use module::convert;
 use std::io::{stdin, stdout, Write};
-
+use crate::module::estimation;
 use crate::module::equity;
 
 #[allow(dead_code)]
@@ -28,7 +29,9 @@ fn main() {
     let hero_cards: Vec<Card> = (&cards[0..2]).to_vec();
     let vill_cards: Vec<Card> = (&cards[2..4]).to_vec();
     let flop_cards: Vec<Card> = (&cards[4..7]).to_vec();
-    let eq = equity::calc(&flop_cards, &hero_cards, &vill_cards);
-    println!("*************** EQUITY ***************");
-    print!("hero: {}% \t villain: {}%", eq.0, eq.1);
+    if vill_cards[0] == ( Card{suit:Suit::default(), rank: Rank::default()} ){
+        estimation::calc(&flop_cards, &hero_cards);
+    }else{
+        equity::calc(&flop_cards, &hero_cards, &vill_cards);   
+    }
 }

@@ -3,7 +3,7 @@ use super::handrank::HandRank;
 use super::{combination, judgement};
 
 #[allow(dead_code)]
-pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -> (f64, f64) {
+pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]){
     let mut hero_eq: f64 = 0.0;
     let mut vill_eq: f64 = 0.0;
 
@@ -95,5 +95,8 @@ pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -> (f
             }
         }
     }
-    ((hero_eq * 100.0), (vill_eq * 100.0))
+    hero_eq = hero_eq * 100.0;
+    vill_eq = vill_eq * 100.0;
+    println!("*************** EQUITY ***************");
+    print!("hero: {}% \t villain: {}%", hero_eq, vill_eq); 
 }

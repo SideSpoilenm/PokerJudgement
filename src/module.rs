@@ -4,3 +4,4 @@ pub mod convert;
 pub mod combination;
 pub mod judgement;
 pub mod equity;
+pub mod estimation;
