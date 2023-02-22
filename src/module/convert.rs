@@ -21,6 +21,7 @@ pub fn str_to_rank(s: &str) -> Rank{
     return rank
 }
 
+#[allow(dead_code)]
 pub fn str_to_suit(s: &str) -> Suit{
     let suit: Suit = match s {
         "s" => Suit::Spade,
@@ -32,6 +33,7 @@ pub fn str_to_suit(s: &str) -> Suit{
     suit
 }
 
+#[allow(dead_code)]
 pub fn lavel_to_card(text: String) -> Card{
     let mut t = text.as_str().chars();
     let r = t.nth(0).unwrap().to_string();

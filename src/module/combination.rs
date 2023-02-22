@@ -1,4 +1,4 @@
-use super::card::{Card, Rank, Suit};
+use super::card::{Card, Rank, Suit, self};
 
 pub fn boardmap(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -> Vec<Vec<Card>> {
     let mut board_map: Vec<Vec<Card>> = Vec::new();
@@ -7,22 +7,8 @@ pub fn boardmap(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -
 
     // フロップとプレイヤーのカードを除いた残りのスタブ
     let mut deck: Vec<Card> = Vec::new();
-    for s in [Suit::Spade, Suit::Heart, Suit::Diamond, Suit::Club] {
-        for r in [
-            Rank::Ace,
-            Rank::King,
-            Rank::Queen,
-            Rank::Jack,
-            Rank::Ten,
-            Rank::Nine,
-            Rank::Eight,
-            Rank::Seven,
-            Rank::Six,
-            Rank::Five,
-            Rank::Four,
-            Rank::Three,
-            Rank::Deuce,
-        ] {
+    for s in card::SUITS {
+        for r in card::RANKS {
             let card = Card { rank: r, suit: s };
             if !(distributed_cards.iter().any(|&c| c == card)) {
                 deck.push(card);

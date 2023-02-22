@@ -1,4 +1,22 @@
 // カード
+
+pub const SUITS: [Suit; 4] = [Suit::Spade, Suit::Heart, Suit::Diamond, Suit::Club];
+pub const RANKS: [Rank; 13] = [
+    Rank::Ace,
+    Rank::King,
+    Rank::Queen,
+    Rank::Jack,
+    Rank::Ten,
+    Rank::Nine,
+    Rank::Eight,
+    Rank::Seven,
+    Rank::Six,
+    Rank::Five,
+    Rank::Four,
+    Rank::Three,
+    Rank::Deuce,
+];
+
 #[derive(Clone, Copy, PartialEq, Debug)]
 pub struct Card {
     pub rank: Rank,
