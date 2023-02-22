@@ -1,9 +1,36 @@
 use super::card::Card;
 use super::handrank::HandRank;
-use super::{combination, judgement};
+use super::{combination, convert, judgement};
+use std::io::{stdin, stdout, Write};
+
+pub fn run() {
+    let mut cards: Vec<Card> = Vec::new();
+    println!("*************** CARDS ***************");
+    for label in [
+        "hero's 1st card: ",
+        "hero's 2nd card: ",
+        "villain's 1st card: ",
+        "villain's 2nd card: ",
+        "Flop 1st card: ",
+        "Flop 2nd card: ",
+        "Flop 3rd card: ",
+    ] {
+        print!("{}", label);
+        stdout().flush().unwrap(); // 中間領域にある文字を強制的に標準出力
+        let mut text: String = String::new();
+        stdin().read_line(&mut text).expect("Empty");
+        cards.push(convert::lavel_to_card(text));
+    }
+    let hero_cards: Vec<Card> = (&cards[0..2]).to_vec();
+    let vill_cards: Vec<Card> = (&cards[2..4]).to_vec();
+    let flop_cards: Vec<Card> = (&cards[4..7]).to_vec();
+    let eq = calc(&flop_cards, &hero_cards, &vill_cards);
+    println!("*************** EQUITY ***************");
+    print!("hero: {}% \t villain: {}%", eq.0, eq.1);
+}
 
 #[allow(dead_code)]
-pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]){
+pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]) -> (f64, f64) {
     let mut hero_eq: f64 = 0.0;
     let mut vill_eq: f64 = 0.0;
 
@@ -29,7 +56,7 @@ pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]){
             vill_eq += chopscore;
         } else {
             match hero_result.0 {
-                HandRank::High | HandRank::Flush { suit:_ } => {
+                HandRank::High | HandRank::Flush { suit: _ } => {
                     for i in 0..5 {
                         if vill_result.1[i].rank.value() < hero_result.1[i].rank.value() {
                             hero_eq += winscore;
@@ -48,10 +75,13 @@ pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]){
                 HandRank::OnePair { pair: _ }
                 | HandRank::TwoPair { pair1: _, pair2: _ }
                 | HandRank::Trips { set: _ }
-                | HandRank::Straight { initial:_ }
+                | HandRank::Straight { initial: _ }
                 | HandRank::Fullhouse { set: _, pair: _ }
                 | HandRank::Quads { set: _ }
-                | HandRank::StFlush { initial:_, suit:_ } => {
+                | HandRank::StFlush {
+                    initial: _,
+                    suit: _,
+                } => {
                     // 役の情報(役によって異なる)
                     let hero_info = hero_result.0.info();
                     let vill_info = vill_result.0.info();
@@ -95,8 +125,5 @@ pub fn calc(flop_cards: &[Card], hero_cards: &[Card], vill_cards: &[Card]){
             }
         }
     }
-    hero_eq = hero_eq * 100.0;
-    vill_eq = vill_eq * 100.0;
-    println!("*************** EQUITY ***************");
-    print!("hero: {}% \t villain: {}%", hero_eq, vill_eq); 
+    (hero_eq * 100.0, vill_eq * 100.0)
 }

@@ -1,6 +1,3 @@
-pub mod co;
-pub mod utg_open;
-
 use super::module::convert;
 use super::module::card::{Card, SUITS};
 

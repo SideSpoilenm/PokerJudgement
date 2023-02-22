@@ -5,3 +5,4 @@ pub mod combination;
 pub mod judgement;
 pub mod equity;
 pub mod estimation;
+pub mod dealer;

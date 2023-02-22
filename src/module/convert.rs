@@ -1,4 +1,5 @@
 use super::card::{Card, Rank, Suit};
+use super::dealer::Position;
 
 pub fn str_to_rank(s: &str) -> Rank{
     let rank: Rank = match s {
@@ -47,4 +48,21 @@ pub fn hand_to_label(hand: &Vec<Card>)->String{
         s = format!("{}{}", s, card.to_lavel());
     }
     s
+}
+
+pub fn str_to_position(s: &str) -> Position{
+    let position: Position = match s{
+        "UTG" => Position::UTG,
+        "EP1" => Position::EP1,
+        "EP2" => Position::EP2,
+        "MP1" => Position::MP1,
+        "MP2" => Position::MP2,
+        "HJ" => Position::HJ,
+        "CO" => Position::CO,
+        "BTN" => Position::BTN,
+        "SB" => Position::SB,
+        "BB" => Position::BB,
+        _ => Position::HJ,
+    };
+    position
 }
